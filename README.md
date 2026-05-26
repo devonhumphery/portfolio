@@ -1,2 +1,2 @@
-# portfolio
-# take 2, attempt at portfolio
+# Devon Humphery's Portfolio
+# Thanks for stopping by!
