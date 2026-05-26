@@ -184,26 +184,39 @@ function cs(i) {
 }
 
 /* ─── Contact form ─── */
-function send() {
+async function send() {
   const n = document.getElementById('fn').value.trim();
   const e = document.getElementById('fe').value.trim();
   const m = document.getElementById('fm').value.trim();
-  if (!n || !e || !m) { alert('Please fill in your name, email, and message.'); return; }
+  const t = document.getElementById('ft').value;
 
-  /*
-   * TO WIRE UP EMAIL (Formspree — free, no code):
-   * 1. Go to formspree.io and create a free form
-   * 2. Replace the fetch URL below with your Formspree endpoint
-   * 3. Delete the setTimeout mock and uncomment the fetch block
-   *
-   * fetch('https://formspree.io/f/YOUR_FORM_ID', {
-   *   method: 'POST',
-   *   headers: { 'Content-Type': 'application/json' },
-   *   body: JSON.stringify({ name: n, email: e, type: document.getElementById('ft').value, message: m })
-   * }).then(() => showSuccess());
-   */
+  if (!n || !e || !m) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
 
-  showSuccess();
+  try {
+    const response = await fetch('https://formspree.io/f/xvzywvjd', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: n,
+        email: e,
+        type: t,
+        message: m
+      })
+    });
+
+    if (response.ok) {
+      showSuccess();
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+  } catch (error) {
+    alert('Network error. Please try again.');
+  }
 }
 
 function showSuccess() {
