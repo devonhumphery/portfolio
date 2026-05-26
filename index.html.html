@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devon Humphery — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  /* ── Tokens ── */
+  :root {
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --bg: #ffffff;
+    --bg2: #f7f6f3;
+    --bg3: #f0efe9;
+    --text: #1a1a18;
+    --muted: #5c5c58;
+    --hint: #9a9990;
+    --border: rgba(0,0,0,0.10);
+    --border2: rgba(0,0,0,0.20);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --max: 960px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+
+  /* ── Nav ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.75rem 0 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--text); }
+
+  /* ── Pages ── */
+  .page { display: none; padding: 3.5rem 0 6rem; }
+  .page.active { display: block; }
+
+  /* ── Typography helpers ── */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 1.25rem;
+  }
+  .sec-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hint);
+    margin-bottom: 2rem;
+    padding-bottom: 0.875rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 4rem 0 3.5rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 3.5rem;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(38px, 5.5vw, 66px);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
+    max-width: 700px;
+  }
+  .hero-title em { font-style: italic; color: var(--muted); }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 460px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── Work grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 3rem;
+  }
+  .card {
+    background: var(--bg);
+    padding: 2rem 2rem 1.75rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: background 0.15s;
+  }
+  .card:hover { background: var(--bg2); }
+  .thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+    border: 0.5px solid var(--border2);
+    color: var(--muted);
+  }
+  .card-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .card-cta { font-size: 12px; color: var(--hint); margin-top: auto; }
+
+  /* ── Case study ── */
+  .cs-back {
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2.5rem;
+    transition: color 0.15s;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+  }
+  .cs-back:hover { color: var(--text); }
+  .cs-hero {
+    padding-bottom: 2.5rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .cs-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4.5vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 1.25rem 0;
+  }
+  .cs-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 580px;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .cs-meta { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .cs-meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .cs-meta-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--hint);
+  }
+  .cs-meta-val { font-size: 13px; font-weight: 500; }
+  .cs-body { max-width: 660px; }
+  .cs-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-lg);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+  }
+  .cs-sec { margin-bottom: 2.25rem; }
+  .cs-sec h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin-bottom: 0.875rem;
+    letter-spacing: -0.01em;
+  }
+  .cs-sec p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin: 2rem 0;
+  }
+  .stat { background: var(--bg2); padding: 1.25rem 1rem; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ── Media placeholders ── */
+  .media-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 2rem 0;
+  }
+  .media-slot {
+    border-radius: var(--radius-sm);
+    border: 1.5px dashed var(--border2);
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--bg2);
+    color: var(--hint);
+  }
+  .media-slot svg { width: 24px; height: 24px; stroke: var(--hint); fill: none; stroke-width: 1.5; }
+  .media-slot span { font-size: 12px; color: var(--hint); text-align: center; padding: 0 1rem; }
+  .media-slot-full { grid-column: 1 / -1; aspect-ratio: 16/7; }
+
+  /* Replace a placeholder with a real image: */
+  /* .media-slot { padding: 0; overflow: hidden; } */
+  /* .media-slot img { width: 100%; height: 100%; object-fit: cover; } */
+
+  /* Replace the video placeholder: */
+  /* .media-slot-full { padding: 0; overflow: hidden; } */
+  /* .media-slot-full video, .media-slot-full iframe { width: 100%; height: 100%; } */
+
+  /* ── About ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .avatar {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    margin-bottom: 1.25rem;
+    background: var(--bg2);
+    overflow: hidden;
+  }
+  /* Replace avatar: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover"> */
+  .about-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .about-role { font-size: 13px; color: var(--muted); }
+  .about-right h2 {
+    font-family: var(--serif);
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .about-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  .skills-table {
+    width: 100%;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .skill-row { display: grid; grid-template-columns: 1fr 1fr; }
+  .skill-row:not(:last-child) { border-bottom: 0.5px solid var(--border); }
+  .skill-cell { padding: 0.75rem 1rem; font-size: 13px; }
+  .skill-cell:first-child { border-right: 0.5px solid var(--border); font-weight: 500; }
+  .skill-cell:last-child { color: var(--muted); }
+
+  /* ── Contact ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-left h2 {
+    font-family: var(--serif);
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .contact-left p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1.75rem;
+  }
+  .contact-info-item {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 0.875rem;
+  }
+  .contact-info-item a { color: var(--text); text-decoration: none; }
+  .contact-info-item a:hover { text-decoration: underline; }
+  .form-wrap {
+    background: var(--bg2);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+  }
+  .fl { margin-bottom: 1.1rem; }
+  .fl label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .fl input,
+  .fl textarea,
+  .fl select {
+    width: 100%;
+    background: var(--bg);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    resize: none;
+    appearance: none;
+  }
+  .fl input:focus, .fl textarea:focus { border-color: var(--text); }
+  .fl textarea { min-height: 110px; }
+  .sbtn {
+    width: 100%;
+    padding: 13px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: opacity 0.15s;
+  }
+  .sbtn:hover { opacity: 0.8; }
+  .fnote {
+    font-size: 11px;
+    color: var(--hint);
+    text-align: center;
+    margin-top: 0.6rem;
+  }
+  .success { text-align: center; padding: 2rem 1rem; display: none; }
+  .success-icon { font-size: 28px; margin-bottom: 0.75rem; }
+  .success h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    margin-bottom: 0.4rem;
+  }
+  .success p { font-size: 13px; color: var(--muted); }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .media-grid { grid-template-columns: 1fr; }
+    .cs-meta { gap: 1.5rem; }
+    nav { flex-wrap: wrap; gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" onclick="go('home')">Devon Humphery</a>
+    <div class="nav-links">
+      <a onclick="go('home')" id="nav-home" class="active">Work</a>
+      <a onclick="go('about')" id="nav-about">About</a>
+      <a onclick="go('contact')" id="nav-contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <div class="hero">
+      <p class="eyebrow">Emerging media · UX research · Policy · Technical development</p>
+      <h1 class="hero-title">Designing systems people can <em>actually</em> navigate.</h1>
+      <p class="hero-sub">I research, prototype, and communicate across disciplines — from usability labs to state legislatures, from interactive narrative to AI policy.</p>
+    </div>
+    <p class="sec-label">Selected work</p>
+    <div class="grid">
+
+      <div class="card" onclick="cs(0)">
+        <div class="thumb" style="background:#E1F5EE">🔬</div>
+        <div class="tags"><span class="tag">Usability</span><span class="tag">Research</span></div>
+        <div class="card-title">Obsidian note-linking usability study</div>
+        <div class="card-desc">Heuristic evaluation and survey research investigating how intuitively users build and navigate linked knowledge systems.</div>
+        <span class="card-cta">View case study →</span>
+      </div>
+
+      <div class="card" onclick="cs(1)">
+        <div class="thumb" style="background:#FDF4FF">🐝</div>
+        <div class="tags"><span class="tag">Interactive Narrative</span><span class="tag">Python</span></div>
+        <div class="card-title">Busy Bees — interactive digital narrative</div>
+        <div class="card-desc">A dystopian Ren'Py game where four tracked variables drive branching story outcomes across three narrative tracks.</div>
+        <span class="card-cta">View case study →</span>
+      </div>
+
+      <div class="card" onclick="cs(2)">
+        <div class="thumb" style="background:#FAEEDA">🌿</div>
+        <div class="tags"><span class="tag">Transmedia</span><span class="tag">Strategic Comm</span></div>
+        <div class="card-title">Sola: Light in a Polluted Industry</div>
+        <div class="card-desc">A transmedia storytelling campaign exposing PFAS contamination in outdoor apparel — documentary, card game, AR, and social media as one system.</div>
+        <span class="card-cta">View case study →</span>
+      </div>
+
+      <div class="card" onclick="cs(3)">
+        <div class="thumb" style="background:#E6F1FB">🏛️</div>
+        <div class="tags"><span class="tag">Gov Affairs</span><span class="tag">Policy</span></div>
+        <div class="card-title">Indiana legislative operations</div>
+        <div class="card-desc">Legislative intern supporting the Speaker of the House through a $44B budget session — policy briefs, constituent liaison, and civic presentations.</div>
+        <span class="card-cta">View case study →</span>
+      </div>
+
+      <div class="card" onclick="cs(4)">
+        <div class="thumb" style="background:#FEF9EE">💡</div>
+        <div class="tags"><span class="tag">Capstone</span><span class="tag">UX Research</span><span class="tag">Prototyping</span></div>
+        <div class="card-title">Breaking Brightness — capstone usability study</div>
+        <div class="card-desc">An experiential study of unnecessary interface innovation using intentionally broken brightness controls to examine when redesign helps versus harms.</div>
+        <span class="card-cta">View case study →</span>
+      </div>
+
+      <div class="card" onclick="cs(5)">
+        <div class="thumb" style="background:#EAF3DE">💰</div>
+        <div class="tags"><span class="tag">Technical Dev</span><span class="tag">Python</span><span class="tag">Client Work</span></div>
+        <div class="card-title">EAC: Get Real financial literacy game</div>
+        <div class="card-desc">Lead technical developer on a Ren'Py financial literacy game for the Economic Awareness Council — bank system, relationship mechanics, and full technical documentation.</div>
+        <span class="card-cta">View case study →</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CASE STUDY -->
+  <div id="page-cs" class="page">
+    <div id="cs-content"></div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="page-about" class="page">
+    <p class="sec-label">About</p>
+    <div class="about-grid">
+      <div>
+        <div class="avatar">
+          <!-- Replace with: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:16px"> -->
+          👤
+        </div>
+        <div class="about-name">Devon Humphery</div>
+        <div class="about-role">MA, Emerging Media Design &amp; Development<br>Ball State University, 2026</div>
+      </div>
+      <div class="about-right">
+        <h2>I work where research, design, and policy meet.</h2>
+        <p class="about-body">I hold an MA in Emerging Media Design and Development (HCI concentration) from Ball State University, where I spent two years studying how people interact with technology, systems, and stories. Before that, a BS in General Studies with a Theatre minor gave me a foundation in empathy, communication, and audience.</p>
+        <p class="about-body">My work spans usability testing, interactive narrative development, transmedia storytelling, technical Python development, and government affairs. I've coded games, evaluated AI chatbots, designed museum exhibits, built transmedia campaigns, and supported a $44B state budget session — sometimes in the same semester.</p>
+        <p class="about-body">Currently serving as a Congressional Defense and Tech Policy Intern in the office of U.S. Senator Jim Banks in Washington, D.C. Verizon Scholar — Indiana General Assembly Intern of the Year, 2025.</p>
+        <div class="sec-label" style="margin-top:2.25rem">Skills</div>
+        <div class="skills-table">
+          <div class="skill-row"><div class="skill-cell">Usability testing</div><div class="skill-cell">Heuristic evaluation, think-aloud, surveys</div></div>
+          <div class="skill-row"><div class="skill-cell">Qualitative research</div><div class="skill-cell">Thematic analysis, Dedoose, affinity mapping</div></div>
+          <div class="skill-row"><div class="skill-cell">Technical development</div><div class="skill-cell">Python (Ren'Py), IDN theory, game systems</div></div>
+          <div class="skill-row"><div class="skill-cell">Strategic communication</div><div class="skill-cell">Transmedia, policy briefs, civic presentations</div></div>
+          <div class="skill-row"><div class="skill-cell">Gov affairs</div><div class="skill-cell">Legislative research, stakeholder liaison</div></div>
+          <div class="skill-row"><div class="skill-cell">Design</div><div class="skill-cell">Figma, prototyping, exhibit design</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="page-contact" class="page">
+    <p class="sec-label">Get in touch</p>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h2>Let's connect.</h2>
+        <p>Open to research roles, UX positions, policy-adjacent opportunities, and collaborative projects. I typically respond within 24 hours.</p>
+        <div class="contact-info-item">
+          <svg viewBox="0 0 24 24" width="15" height="15"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+          <a href="mailto:devnhumphery@gmail.com">devnhumphery@gmail.com</a>
+        </div>
+        <div class="contact-info-item">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          317-515-4022
+        </div>
+        <div class="contact-info-item">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <a href="https://linkedin.com/in/devon-humphery" target="_blank" rel="noopener">linkedin.com/in/devon-humphery</a>
+        </div>
+        <div class="contact-info-item">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Washington, D.C. · Open to remote
+        </div>
+      </div>
+      <div>
+        <div class="form-wrap">
+          <div id="form-fields">
+            <div class="fl"><label>Your name</label><input type="text" id="fn" placeholder="Jane Smith"></div>
+            <div class="fl"><label>Email</label><input type="email" id="fe" placeholder="jane@org.com"></div>
+            <div class="fl">
+              <label>Opportunity type</label>
+              <select id="ft">
+                <option value="">Select one...</option>
+                <option>UX / research role</option>
+                <option>Policy / gov affairs</option>
+                <option>Project collaboration</option>
+                <option>Speaking or presentation</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="fl"><label>Message</label><textarea id="fm" placeholder="Tell me about the opportunity or project..."></textarea></div>
+            <button class="sbtn" onclick="send()">Send message</button>
+            <p class="fnote">
+              <!-- To wire up email: replace send() with a Formspree or EmailJS call -->
+              Forwarded to devnhumphery@gmail.com
+            </p>
+          </div>
+          <div class="success" id="form-ok">
+            <div class="success-icon">✓</div>
+            <h3>Message sent!</h3>
+            <p>Thanks for reaching out — I'll be in touch within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.wrap -->
+
+<script>
+/* ─── Case study data ─── */
+const studies = [
+  {
+    emoji:'🔬', bg:'#E1F5EE',
+    tags:['Usability Research','Heuristic Evaluation','Survey Design'],
+    title:'Obsidian note-linking usability study',
+    sub:'Evaluating how intuitively users create, navigate, and leverage linked notes in a non-linear knowledge management tool.',
+    client:'Ball State University', year:'2024', role:'Lead Researcher',
+    problem:'Obsidian offers a powerful graph-based note system, but its linking mechanics presented a steep learning curve. The study asked: does the interface support users in organizing complex information, or does its flexibility become a barrier? Survey participants reported fragmented notes across multiple tools and desired unified, searchable systems — a baseline Obsidian promises but doesn\'t always deliver.',
+    process:'I distributed surveys via Microsoft Teams, Slack, and in-person at Ball State, targeting students and professionals aged 18–35. Survey questions probed pain points, ideal tool features, and organization habits. I then conducted a structured heuristic evaluation of Obsidian using Nielsen\'s 10 usability heuristics across the note-linking workflow. Data was collected in Qualtrics and analyzed in Excel. Three user personas emerged: the fragmented multi-tool user, the power user seeking deeper integration, and the casual note-taker overwhelmed by complexity.',
+    outcome:'Key findings showed Obsidian\'s linking system lacked visual feedback on link creation, had no undo/redo affordance in certain contexts, and offered no onboarding for new users. Recommendations included contextual tooltips, link confirmation cues, and a guided first-use tutorial. The evaluation provided a concrete foundation for a redesign proposal prioritizing progressive disclosure over feature exposure.',
+    stats:[{n:'3',l:'Personas developed'},{n:'10',l:'Heuristics evaluated'},{n:'4',l:'Key friction points identified'}],
+    media: null
+  },
+  {
+    emoji:'🐝', bg:'#FDF4FF',
+    tags:['Interactive Narrative','Python / Ren\'Py','IDN Theory'],
+    title:'Busy Bees — interactive digital narrative',
+    sub:'A dystopian Ren\'Py game where four tracked variables — agency, suspicion, hive trust, and obedience — shape player experience across three branching story tracks.',
+    client:'Ball State University', year:'2026', role:'Solo Developer &amp; Designer',
+    problem:'The challenge was building an interactive narrative that felt consequential without explicit score displays. The game places players inside a collapsing hive society where bees are disappearing and their life force is being extracted. Tension had to emerge through environmental storytelling and implication — not overt conflict. Players needed to feel the weight of compliance versus resistance without being told which to choose.',
+    process:'I developed the full game in Python using the Ren\'Py visual novel engine, coding four tracked variables that dynamically adjusted dialogue, scene access, and narrative outcomes. The architecture followed Koenitz\'s IDN framework: authorship distributed between system and player, with procedural storytelling emerging from accumulated behavioral patterns rather than single decisions. Following usability testing, I added character assets for key NPCs, narrative pop-ups for system feedback, and early low-stakes choices to establish player agency before higher-consequence moments.',
+    outcome:'Usability testing revealed that players needed earlier agency cues to understand the system was tracking their choices. Post-revision playthroughs showed stronger narrative investment and clearer moral tension at the Chapter 3 climax. The project demonstrates that consequence-driven storytelling — where endings reflect cumulative patterns, not single choices — creates more authentic player reflection. Published and downloadable on itch.io.',
+    stats:[{n:'3',l:'Narrative endings'},{n:'4',l:'Tracked player variables'},{n:'3',l:'Chapters with branching paths'}],
+    media: null
+  },
+  {
+    emoji:'🌿', bg:'#FAEEDA',
+    tags:['Transmedia Storytelling','Strategic Communication','Campaign Design'],
+    title:'Sola: Light in a Polluted Industry',
+    sub:'A transmedia storytelling campaign built around a fictional sustainable apparel brand, designed to close the attitude–behavior gap in environmental consumer decision-making.',
+    client:'Ball State University · EMDD 640', year:'2026', role:'Co-Executive Producer',
+    problem:'Seven in ten Americans say nature is important to their health, yet the $17B outdoor apparel industry routinely uses PFAS — chemicals that persist in ecosystems and human bodies. The gap isn\'t ignorance; it\'s a system that obscures consequence. Brands promote sustainability messaging while continuing harmful production. Consumers want to act responsibly but lack clarity. Sola was designed to make the invisible visible.',
+    process:'Working with co-producer Annie Young, I designed a transmedia storyworld across four narrative nodes: a founder documentary, an investigative editorial, a behind-the-scenes design feature, and Sola: The Supply Chain — a card-based strategy game where players balance Integrity, Profit, and Trust over six rounds. Distribution used boutique fitness studios as high-trust entry points, Google search capture for intent-driven discovery, and community events with QR-linked educational hubs. Testing included think-aloud protocols, empathy interviews, A/B caption testing, and platform analytics.',
+    outcome:'The campaign mapped audience movement from passive awareness to active advocacy through four stages. The AR experience "Trace the Fabric" extended the storyworld into users\' physical environments, scanning garments to reveal supply chain origins and PFAS detection overlays. The project was structured for real-world brand application, with a producer network spanning sustainability scientists, fashion leaders, and media strategists.',
+    stats:[{n:'4',l:'Transmedia story nodes'},{n:'6',l:'Week deployment arc'},{n:'3',l:'Media channel strategy'}],
+    media: null
+  },
+  {
+    emoji:'🏛️', bg:'#E6F1FB',
+    tags:['Government Affairs','Policy Research','Legislative Operations'],
+    title:'Indiana legislative operations &amp; policy research',
+    sub:'Legislative intern to senior House leadership during Indiana\'s $44B budget session — policy research, constituent liaison, and civic communication across state and federal offices.',
+    client:'Indiana House of Representatives · Ball State University · Office of Sen. Jim Banks', year:'2025–2026', role:'Legislative Intern → Grad Assistant → Congressional Intern',
+    problem:'State legislative offices operate under intense time pressure with high information volume. During the 2025 Budget Session, leadership staff needed reliable, fast policy synthesis across committees including Courts and Criminal Code and Judiciary. Simultaneously, Ball State\'s Office of Governmental Relations needed someone who could track higher education legislation, interpret budget implications, and represent the university\'s interests to state and federal policymakers.',
+    process:'At the Indiana House of Representatives, I supported Speaker Todd Huston, Majority Caucus Chair Greg Steuerwald, the Director of Legislative Operations, and the Deputy Director — researching bills, preparing policy briefs, serving as governmental liaison with advocacy groups and agencies, and delivering civic awareness presentations to groups of 30–70. At Ball State, I tracked and interpreted legislation across higher education, research funding, student aid, and workforce development. Currently in the Congressional office of U.S. Senator Jim Banks, conducting policy research on emerging technology, geopolitics, AI, and national security.',
+    outcome:'Named Intern of the Year (Verizon Scholar) by the Indiana General Assembly — selected by caucus members, legislative staff, and fellow interns. Expanded the Alcuin Study Center Student Advisory Board from 10 to 30+ active members as Student President. Contributed to Ball State\'s recruitment pipeline for the General Assembly internship program.',
+    stats:[{n:'$44B',l:'Budget session supported'},{n:'3×',l:'Legislative offices served'},{n:'30+',l:'Advisory board members grown'}],
+    media: null
+  },
+  {
+    emoji:'💡', bg:'#FEF9EE',
+    tags:['Capstone Research','Prototyping','Usability'],
+    title:'Breaking Brightness — experiential study of unnecessary interface innovation',
+    sub:'A design-research capstone asking: does innovation in the interface actually improve usability? Participants completed brightness adjustment tasks using intentionally unconventional controls across low- and mid-fidelity prototypes.',
+    client:'Ball State University · EMDD 680 Capstone', year:'2026', role:'Sole Researcher &amp; Designer',
+    problem:'Existing HCI research critiques poor interface design through expert review and post-hoc analysis — but rarely lets users experience the consequences of unnecessary innovation for themselves. Brightness control is the ideal domain: a single, universally standardized task where any deviation from the familiar linear slider produces measurable cognitive and affective responses. The study asked: when does redesign help, and when does it just introduce friction?',
+    process:'I designed a low-fidelity paper prototype featuring five metaphorical brightness controls: manual panels, a resizable sun, lamps, a candle cursor, and an alarm clock. Four participants completed tasks using sticky-note interactivity to simulate screen state changes while I recorded task completion time, failure attempts, and frustration ratings. Post-testing interviews surfaced key insights about mental model alignment. Findings directly informed a mid-fidelity digital prototype built in Ren\'Py, which reduced interaction variants, added structured onboarding, and improved system feedback.',
+    outcome:'Interactions aligned with real-world metaphors (the sun, the alarm clock) were rated most intuitive. Abstract controls with unclear mapping caused consistent confusion regardless of learnability. An unexpected finding: some "broken" interactions were described as engaging or game-like, suggesting intentionally flawed systems hold value as reflective design education tools. The project produced a framework for evaluating when innovation is beneficial — and when restraint is the more user-centered choice.',
+    stats:[{n:'5',l:'Unconventional controls tested'},{n:'2',l:'Prototype fidelity stages'},{n:'4',l:'Participants, 10 min avg session'}],
+    media: {
+      type:'photos',
+      slots:[
+        'Low-fi prototype hub — paper cardstock layout',
+        'Sticky-note interaction simulation in testing',
+        'Mid-fi Ren\'Py screen — manual brightness panels',
+        'Mid-fi Ren\'Py screen — lamp interaction'
+      ]
+    }
+  },
+  {
+    emoji:'💰', bg:'#EAF3DE',
+    tags:['Technical Development','Python / Ren\'Py','Client Work','Financial Literacy'],
+    title:'EAC: Get Real — financial literacy game',
+    sub:'Lead technical developer on a Ren\'Py financial literacy experience for the Economic Awareness Council, teaching foster youth and young adults how everyday decisions shape long-term financial outcomes.',
+    client:'Economic Awareness Council · Ball State University', year:'2026', role:'Lead Technical Developer',
+    problem:'The Economic Awareness Council needed to digitize their Money Matters financial literacy program — converting a formerly physical resource into a scalable, interactive digital experience. The game needed to simulate real financial decisions (earning, spending, banking, social pressure) through an accessible narrative format that could reach a nationwide audience without requiring prior financial knowledge.',
+    process:'I led technical development in Python using the Ren\'Py engine across a 6-week sprint, designing and implementing all core back-end systems: a bank system with paycheck mechanics (gross pay, tax deduction, net amount, overdraft logic at line 448 of global.rpy), a relationship/stats system tracking character standing across close/neutral/distant tiers, location-based branching across seven scenes (home, school, work, bank, mall, friends\' house, library), and a random unexpected expense system introducing real-world financial variability. I also authored full technical documentation covering all editable systems — audio, text, images, characters, bank logic, and relationship mechanics — structured so non-developer EAC staff could maintain and expand the game after handoff.',
+    outcome:'Delivered a functional mid-fidelity prototype with three narrative endings determined by cumulative financial and relationship choices. The technical documentation enabled clean handoff to the client team. The game is positioned for nationwide implementation as a scalable digital financial literacy resource for the Economic Awareness Council\'s 20th anniversary program.',
+    stats:[{n:'7',l:'Playable locations built'},{n:'3',l:'Narrative endings'},{n:'6',l:'Core systems documented'}],
+    media: {
+      type:'mixed',
+      slots:[
+        'Game map hub — location selection screen',
+        'Bank system mechanics — paycheck and overdraft logic',
+        'Relationship stats — character interaction scene'
+      ],
+      video: 'Full walkthrough of the Get Real experience'
+    }
+  }
+];
+
+/* ─── Icon SVGs (inline, no external dependency) ─── */
+const iconPhoto = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+const iconVideo = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+
+/* ─── Navigation ─── */
+function go(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const el = document.getElementById('nav-' + name);
+  if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ─── Case study renderer ─── */
+function cs(i) {
+  const s = studies[i];
+
+  let mediaHTML = '';
+  if (s.media) {
+    mediaHTML += `<div class="cs-sec"><h3>Project media</h3></div>`;
+    if (s.media.slots && s.media.slots.length) {
+      mediaHTML += `<div class="media-grid">`;
+      s.media.slots.forEach(label => {
+        mediaHTML += `
+          <div class="media-slot">
+            ${iconPhoto}
+            <span>${label}</span>
+          </div>`;
+      });
+      mediaHTML += `</div>`;
+    }
+    if (s.media.video) {
+      mediaHTML += `
+        <div class="media-grid">
+          <div class="media-slot media-slot-full">
+            ${iconVideo}
+            <span style="font-size:13px">${s.media.video}</span>
+          </div>
+        </div>`;
+    }
+  }
+
+  document.getElementById('cs-content').innerHTML = `
+    <button class="cs-back" onclick="go('home')">← Back to work</button>
+    <div class="cs-hero">
+      <div class="tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <h1 class="cs-title">${s.title}</h1>
+      <p class="cs-sub">${s.sub}</p>
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Client / Context</span>
+          <span class="cs-meta-val">${s.client}</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Year</span>
+          <span class="cs-meta-val">${s.year}</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-val">${s.role}</span>
+        </div>
+      </div>
+    </div>
+    <div class="cs-body">
+      <div class="cs-img" style="background:${s.bg}">${s.emoji}</div>
+      <div class="cs-sec"><h3>The problem</h3><p>${s.problem}</p></div>
+      <div class="cs-sec"><h3>Process</h3><p>${s.process}</p></div>
+      <div class="stats">
+        ${s.stats.map(x => `
+          <div class="stat">
+            <div class="stat-num">${x.n}</div>
+            <div class="stat-label">${x.l}</div>
+          </div>`).join('')}
+      </div>
+      <div class="cs-sec"><h3>Outcome</h3><p>${s.outcome}</p></div>
+      ${mediaHTML}
+    </div>
+  `;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-cs').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ─── Contact form ─── */
+function send() {
+  const n = document.getElementById('fn').value.trim();
+  const e = document.getElementById('fe').value.trim();
+  const m = document.getElementById('fm').value.trim();
+  if (!n || !e || !m) { alert('Please fill in your name, email, and message.'); return; }
+
+  /*
+   * TO WIRE UP EMAIL (Formspree — free, no code):
+   * 1. Go to formspree.io and create a free form
+   * 2. Replace the fetch URL below with your Formspree endpoint
+   * 3. Delete the setTimeout mock and uncomment the fetch block
+   *
+   * fetch('https://formspree.io/f/YOUR_FORM_ID', {
+   *   method: 'POST',
+   *   headers: { 'Content-Type': 'application/json' },
+   *   body: JSON.stringify({ name: n, email: e, type: document.getElementById('ft').value, message: m })
+   * }).then(() => showSuccess());
+   */
+
+  showSuccess();
+}
+
+function showSuccess() {
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('form-ok').style.display = 'block';
+}
+</script>
+</body>
+</html>
