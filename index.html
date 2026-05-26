@@ -152,7 +152,9 @@
       </div>
       <div>
         <div class="form-wrap">
-          <div id="form-fields">
+          <form id="form-fields"
+                action="https://formspree.io/f/xvzywvjd"
+                method="POST">
             <div class="fl"><label>Your name</label><input type="text" id="fn" placeholder="Jane Smith"></div>
             <div class="fl"><label>Email</label><input type="email" id="fe" placeholder="jane@org.com"></div>
             <div class="fl">
@@ -167,13 +169,13 @@
               </select>
             </div>
             <div class="fl"><label>Message</label><textarea id="fm" placeholder="Tell me about the opportunity or project..."></textarea></div>
-            <button class="sbtn" onclick="send()">Send message</button>
+            <button class="sbtn" type="submit">Send message</button>
             <p class="fnote">
               <!-- To wire up email: replace send() with a Formspree or EmailJS call -->
               Forwarded to devnhumphery@gmail.com
             </p>
           </div>
-          <div class="success" id="form-ok">
+          </form>
             <div class="success-icon">✓</div>
             <h3>Message sent!</h3>
             <p>Thanks for reaching out — I'll be in touch within 24 hours.</p>
