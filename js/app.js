@@ -85,7 +85,10 @@ const studies = [
         'Bank system mechanics — paycheck and overdraft logic',
         'Relationship stats — character interaction scene'
       ],
-      video: 'Full walkthrough of the Get Real experience'
+      video: {
+        title: 'Watch the Get Real trailer',
+        url: 'https://youtu.be/bfhdBsWXiTI'
+      }
     }
   }
 ];
@@ -126,8 +129,12 @@ function cs(i) {
       mediaHTML += `
         <div class="media-grid">
           <div class="media-slot media-slot-full">
-            ${iconVideo}
-            <span style="font-size:13px">${s.media.video}</span>
+            <a href="${s.media.video.url}"
+               target="_blank"
+               style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:inherit;">
+              ${iconVideo}
+              <span style="font-size:13px">${s.media.video.title}</span>
+            </a>
           </div>
         </div>`;
     }
